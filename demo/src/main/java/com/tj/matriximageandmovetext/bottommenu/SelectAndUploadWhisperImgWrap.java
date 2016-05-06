@@ -45,8 +45,6 @@ public class SelectAndUploadWhisperImgWrap {
 		void setWhisperImgPath(String imgPath);
 		
 		Bitmap takeImageViewParentShot();
-		
-		String getPublishContent();
 	}
 	
 	private Activity getContext(){
@@ -55,9 +53,6 @@ public class SelectAndUploadWhisperImgWrap {
 	
 	//---------------------------------------换图
 	
-	private TextView tv_album;
-	private TextView tv_take;
-	private TextView tv_cancel;
 	private AlertDialog dialog;
 	
 	private static final int REQUEST_CODE_PICK_PHOTO_FROM_CAMERA = 0;
@@ -72,9 +67,9 @@ public class SelectAndUploadWhisperImgWrap {
 		TextView tvTitle = (TextView)view.findViewById(R.id.title);
 		tvTitle.setText("选图");
 
-		tv_album = (TextView) view.findViewById(R.id.tv_album);
-		tv_take = (TextView) view.findViewById(R.id.tv_take);
-		tv_cancel = (TextView) view.findViewById(R.id.tv_cancel);
+		TextView tv_album = (TextView) view.findViewById(R.id.tv_album);
+		TextView tv_take = (TextView) view.findViewById(R.id.tv_take);
+		TextView tv_cancel = (TextView) view.findViewById(R.id.tv_cancel);
 		
 		tv_cancel.setOnClickListener(new OnClickListener() {
 			
@@ -101,8 +96,11 @@ public class SelectAndUploadWhisperImgWrap {
 				dialog.dismiss();
 				File newfile = new File(whisperPublishNeedParams.getSaveTempPicPath());// file
 				try {
-					newfile.createNewFile();
+					if(!newfile.createNewFile()){
+						return;
+					}
 				} catch (IOException e) {
+					e.printStackTrace();
 				}
 
 				Uri outputFileUri = Uri.fromFile(newfile);
@@ -127,8 +125,8 @@ public class SelectAndUploadWhisperImgWrap {
 				Uri uri = data.getData();
 
 				String[] proj = { MediaStore.Images.Media.DATA };
-				Cursor cursor = getContext().managedQuery(uri, proj, null, null, null);
-				
+				Cursor cursor = getContext().getContentResolver().query(uri, proj, null, null, null);
+
 				if(cursor != null){
 					try {
 						int actual_image_column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
@@ -136,6 +134,9 @@ public class SelectAndUploadWhisperImgWrap {
 						
 						selectAndUploadWhisperImgWrapDelegate.setWhisperImgPath(cursor.getString(actual_image_column_index));
 						selectAndUploadWhisperImgWrapDelegate.refreshWhisperImg();
+
+						cursor.close();
+
 					} catch (Exception e) {
 						Toast.makeText(getContext(), "请选择系统相册图片", Toast.LENGTH_SHORT).show();
 					}
@@ -153,44 +154,34 @@ public class SelectAndUploadWhisperImgWrap {
 	}
 
 	// 提交whisper图片
-	public void uploadUserWhisperPhoto(String imgId){
+	public void uploadUserWhisperPhoto(){
 		
-		saveBitmapToLocalFile(whisperPublishNeedParams.getSaveWaitUploadPicPath(), selectAndUploadWhisperImgWrapDelegate.takeImageViewParentShot(), 80, false);
-//		String whisperContent = selectAndUploadWhisperImgWrapDelegate.getPublishContent();//getWhisperImgCoverTextEditString();
+		Bitmap sourceBitmap = selectAndUploadWhisperImgWrapDelegate.takeImageViewParentShot();
 
-		Toast.makeText(getContext(), whisperPublishNeedParams.getSaveWaitUploadPicPath(), Toast.LENGTH_LONG).show();
-	}
-
-	private void saveBitmapToLocalFile(String filePath , Bitmap sourceBitmap , int compressDegree , boolean isSourceBitmapRecycle){
-
-		FileOutputStream stream = null;
-
-		File file = new File(filePath);
+		File file = new File(whisperPublishNeedParams.getSaveWaitUploadPicPath());
 		if (file.exists()) {
-			file.delete();
+			if (!file.delete()){
+				return;
+			}
 		}
 
 		try {
-			stream = new FileOutputStream(file);
+			FileOutputStream stream = new FileOutputStream(file);
+
 			if(sourceBitmap != null && !sourceBitmap.isRecycled()){
-				sourceBitmap.compress(Bitmap.CompressFormat.JPEG, compressDegree, stream);//大小压缩
+				sourceBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);//大小压缩
+			}
+
+			try {
+				stream.flush();
+				stream.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if (stream != null) {
-					stream.flush();
-					stream.close();
-				}
-
-				if(isSourceBitmapRecycle && sourceBitmap != null && !sourceBitmap.isRecycled()){
-					sourceBitmap.recycle();
-				}
-			} catch (IOException e2) {
-			}
 		}
-
+		Toast.makeText(getContext(), whisperPublishNeedParams.getSaveWaitUploadPicPath(), Toast.LENGTH_LONG).show();
 	}
 
 }

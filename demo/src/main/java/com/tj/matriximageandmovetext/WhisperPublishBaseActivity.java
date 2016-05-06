@@ -1,7 +1,6 @@
 package com.tj.matriximageandmovetext;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -52,13 +51,8 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Whi
 	private EditText whisperImgCoverTextEdit;
 	private TextView whisperImgCoverText;
 	
-	private ImageButton whisperBackText;
-	private ImageButton whisperSubmitText;
-	
-	private LinearLayout whisperChangeImg;
-
 	private String imgId;//记录当前选中的匹配图img id
-	
+
 	public Handler getHandler() {
 		return handler;
 	}
@@ -70,7 +64,6 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Whi
 	private Handler handler = new Handler();
 	private LayoutInflater inflater;
 	
-	private int screenHeight;//屏幕高
 	private int imgShowWidth;//图片显示宽度
 	private int imgShowHeight;//图片显示高度
 	
@@ -117,7 +110,7 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Whi
 		Resources re = getResources();
         DisplayMetrics metrics = re.getDisplayMetrics();
         imgShowWidth = metrics.widthPixels;
-        screenHeight = metrics.heightPixels;
+        int screenHeight = metrics.heightPixels;
         
         int statusBarHeight = 38;//状态栏高度
         
@@ -166,16 +159,16 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Whi
 				}
 			}
 		});
-		
-		whisperBackText = (ImageButton)findViewById(R.id.whisper_publish_back_text);
+
+		ImageButton whisperBackText = (ImageButton)findViewById(R.id.whisper_publish_back_text);
 		whisperBackText.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				finish();
 			}
 		});
-		
-		whisperSubmitText = (ImageButton)findViewById(R.id.whisper_publish_submit_text);
+
+		ImageButton whisperSubmitText = (ImageButton)findViewById(R.id.whisper_publish_submit_text);
 		whisperSubmitText.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -191,11 +184,11 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Whi
 					return;
 				}
 				
-				selectAndUploadWhisperImgWrap.uploadUserWhisperPhoto(getWhisperImageId());
+				selectAndUploadWhisperImgWrap.uploadUserWhisperPhoto();
 			}
 		});
-		
-		whisperChangeImg = (LinearLayout)findViewById(R.id.whisper_publish_change_img);
+
+		LinearLayout whisperChangeImg = (LinearLayout)findViewById(R.id.whisper_publish_change_img);
 		whisperChangeImg.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -227,10 +220,6 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Whi
 		this.imgId = img;
 	}
 	
-	private String getWhisperImageId(){
-		return imgId;
-	}
-	
 	private String getWhisperImgCoverTextEditString(){
 		String str = whisperImgCoverTextEdit.getText().toString();
 		if(!TextUtils.isEmpty(str)){
@@ -238,10 +227,6 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Whi
 		}else{
 			return "";
 		}
-	}
-	
-	protected void showWhisperImg(){
-		new generateWhisperPublishImgThread().start();
 	}
 	
 	//显示发布图片线程
@@ -333,11 +318,6 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Whi
 		whipserImgContainer.setDrawingCacheEnabled(true);
 		whipserImgContainer.buildDrawingCache();
 		return whipserImgContainer.getDrawingCache();
-	}
-	
-	@Override
-	public String getPublishContent(){
-		return getWhisperImgCoverTextEditString();
 	}
 	
 	@Override
