@@ -1,71 +1,9 @@
 <resources>
     <string name="app_name">MatrixImageAndMoveText</string>
-
-    <!-- whisper相关 -->
-    <string name="activity_whisper_upload_failure">上传图片失败</string>
-    <string name="activity_whisper_upload_success">上传成功</string>
-    <string name="activity_whisper_change_photo">换照片</string>
-    <string name="activity_whisper_typeface">字体</string>
-    <string name="activity_whisper_adjust">调整效果</string>
-    <string name="activity_whisper_mimi">分享思绪与秘密,让内心的正能量在这里共鸣</string>
-    <string name="activity_whisper_remen">热门</string>
-    <string name="activity_whisper_zuixin">最新</string>
-    <string name="activity_whisper_select_photo">选取照片</string>
-    <string name="activity_whisper_submit_photo">确认提交</string>
-    <string name="activity_whisper_my_submit">我发表的</string>
-    <string name="activity_whisper_my_comment">我评论的</string>
-    <string name="activity_whisper_watch_qiaoqiao">悄悄话内容</string>
-    <string name="activity_whisper_comment">评论</string>
-    <string name="activity_whisper_pass">等待审核</string>
-    <string name="activity_whisper_save_local">保存到本地</string>
-    <string name="activity_whisper_nickname">昵称</string>
-    <string name="activity_whisper_sex">性别</string>
-    <string name="activity_whisper_ding">顶</string>
-    <string name="activity_whisper_fenxiang">分享</string>
-    <string name="activity_whisper_pinglun">评论</string>
-    <string name="activity_whisper_select_title">选一张有代表性的背景图片</string>
+    <string name="activity_whisper_publish_new_change_pic">换图</string>
     <string name="activity_whisper_album">相册</string>
     <string name="activity_whisper_take">拍照</string>
-    <string name="activity_whisper_hint">限输入80字.发表内容需经人工审核,色情反动广告等一律封设备,为保障隐私请勿留联系方式.</string>
-    <string name="activity_whisper_publish_new_loading_tips">为您配图中&#8230;</string>
-    <string name="activity_whisper_publish_new_hint">在此写下你想说的心里话,系统将为您自动匹配,限80字内。</string>
-    <string name="activity_whisper_publish_new_change_pic">换图</string>
-    <string name="activity_whisper_publish_base_yo_text">悠</string>
-    <string name="activity_whisper_detail_his_page">他的主页</string>
-    <string name="activity_whisper_detail_download">下载</string>
-    <string name="activity_whisper_detail_report">举报</string>
-    <string name="activity_whisper_detail_download_already">已经下载到相册</string>
-    <string name="activity_whisper_cancel_publish">是否取消编辑</string>
-    <string name="activity_whisper_cancel_publish_yes">是</string>
-    <string name="activity_whisper_cancel_publish_no">否</string>
-
+    <string name="activity_whisper_publish_new_loading_tips">配图中&#8230;</string>
     <string name="whipser_publish_cancel">取消</string>
-    <string name="whipser_publish_request_failure">请求失败</string>
 
-    <string name="whipser_publish_progress_dialog_tip_type">正在上传图片，请耐心等候</string>
-
-    <!-- whisper 提示相关文字 -->
-    <string name="whipser_publish_success_tip">悠悠话发表成功,请耐心等待审核</string>
-    <string name="whipser_publish_repeated_tip">你已发过同样内容的悠悠话了,来点新花样吧!</string>
-    <string name="whipser_publish_failure_tip">悠悠话发表失败</string>
-
-    <string name="whipser_theme_publish_success_tip">主题参与成功,请耐心等待审核</string>
-    <string name="whipser_theme_publish_failure_tip">主题参与失败</string>
-
-    <!-- request result code -->
-    <string name="whipser_request_success">1</string>
-    <string name="whipser_request_failure">请求失败</string>
-    <string name="whipser_request_invalid">无效请求</string>
-    <string name="whipser_request_user_not_exist">用户不存在</string>
-    <string name="whipser_request_user_disabled">已被封号</string>
-    <string name="whipser_request_token_null">TOKEN为空</string>
-    <string name="whipser_request_code_error">验证码错误</string>
-    <string name="whipser_request_source_error">来源错误</string>
-    <string name="whipser_request_login_error">您的帐号已在其他设备登录，请重新登录</string>
-    <string name="whipser_request_no_permission">无访问权限</string>
-    <string name="whipser_request_photo_id_null">悠悠话ID为空</string>
-    <string name="whipser_request_photo_operated">该悠悠话已操作过</string>
-    <string name="whipser_request_content_invalid">悠悠话内容内容违规</string>
-    <string name="whipser_request_content_null">悠悠话内容为空</string>
-    <string name="whipser_request_has_login_out">尚未登录</string>
 </resources>
