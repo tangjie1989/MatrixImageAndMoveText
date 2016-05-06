@@ -160,7 +160,7 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Whi
 				if(whisperImgCoverText.getVisibility() == View.VISIBLE){
 					whisperImgCoverText.setVisibility(View.GONE);
 					whisperImgCoverTextEdit.setVisibility(View.VISIBLE);
-					SoftInputUtils.openInput(WhisperPublishBaseActivity.this,whisperImgCoverTextEdit);
+					SoftInputUtils.openInput(WhisperPublishBaseActivity.this);
 				}else{
 					mesureTextViewSizeAndPostion();
 				}

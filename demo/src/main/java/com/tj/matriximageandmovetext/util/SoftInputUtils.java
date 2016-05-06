@@ -11,7 +11,7 @@ import java.util.TimerTask;
 public class SoftInputUtils {
 	
 	//打开软键盘
-	public static void openInput(final Context ctx,EditText etx){
+	public static void openInput(final Context ctx){
 		
 		Timer timer = new Timer();  
         timer.schedule(new TimerTask() {  

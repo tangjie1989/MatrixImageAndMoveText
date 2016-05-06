@@ -15,10 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tj.matriximageandmovetext.R;
-import com.tj.matriximageandmovetext.util.UploadFileSaveToDiscCacheUtil;
 import com.tj.matriximageandmovetext.vo.WhisperPublishNeedParams;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class SelectAndUploadWhisperImgWrap {
@@ -31,15 +32,11 @@ public class SelectAndUploadWhisperImgWrap {
 		this.whisperPublishNeedParams = whisperPublishNeedParams;
 		this.activity = activity;
 		this.selectAndUploadWhisperImgWrapDelegate = selectAndUploadWhisperImgWrapDelegate;
-		
-		uploadFileSaveToDiscCacheUtil = new UploadFileSaveToDiscCacheUtil(whisperPublishNeedParams.getSaveWaitUploadPicPath(), whisperPublishNeedParams.getSaveTempPicPath());
 	}
 
 	private WhisperPublishNeedParams whisperPublishNeedParams;
 	private Activity activity;
 	private SelectAndUploadWhisperImgWrapDelegate selectAndUploadWhisperImgWrapDelegate;
-	
-	private UploadFileSaveToDiscCacheUtil uploadFileSaveToDiscCacheUtil;
 	
 	public interface SelectAndUploadWhisperImgWrapDelegate{
 		
@@ -158,10 +155,42 @@ public class SelectAndUploadWhisperImgWrap {
 	// 提交whisper图片
 	public void uploadUserWhisperPhoto(String imgId){
 		
-		uploadFileSaveToDiscCacheUtil.saveBitmapToLocalFile(whisperPublishNeedParams.getSaveWaitUploadPicPath(), selectAndUploadWhisperImgWrapDelegate.takeImageViewParentShot(), 80, false);
+		saveBitmapToLocalFile(whisperPublishNeedParams.getSaveWaitUploadPicPath(), selectAndUploadWhisperImgWrapDelegate.takeImageViewParentShot(), 80, false);
 //		String whisperContent = selectAndUploadWhisperImgWrapDelegate.getPublishContent();//getWhisperImgCoverTextEditString();
 
 		Toast.makeText(getContext(), whisperPublishNeedParams.getSaveWaitUploadPicPath(), Toast.LENGTH_LONG).show();
+	}
+
+	private void saveBitmapToLocalFile(String filePath , Bitmap sourceBitmap , int compressDegree , boolean isSourceBitmapRecycle){
+
+		FileOutputStream stream = null;
+
+		File file = new File(filePath);
+		if (file.exists()) {
+			file.delete();
+		}
+
+		try {
+			stream = new FileOutputStream(file);
+			if(sourceBitmap != null && !sourceBitmap.isRecycled()){
+				sourceBitmap.compress(Bitmap.CompressFormat.JPEG, compressDegree, stream);//大小压缩
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (stream != null) {
+					stream.flush();
+					stream.close();
+				}
+
+				if(isSourceBitmapRecycle && sourceBitmap != null && !sourceBitmap.isRecycled()){
+					sourceBitmap.recycle();
+				}
+			} catch (IOException e2) {
+			}
+		}
+
 	}
 
 }

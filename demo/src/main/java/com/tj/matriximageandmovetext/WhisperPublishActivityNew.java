@@ -46,7 +46,7 @@ public class WhisperPublishActivityNew extends WhisperPublishBaseActivity implem
 			@Override
 			public void run() {
 				getWhisperImgCoverTextEdit().requestFocus();
-				SoftInputUtils.openInput(WhisperPublishActivityNew.this,getWhisperImgCoverTextEdit());
+				SoftInputUtils.openInput(WhisperPublishActivityNew.this);
 			}
 		}, 500);
 		
