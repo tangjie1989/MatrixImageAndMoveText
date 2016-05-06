@@ -246,10 +246,12 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Whi
 				public void run() {
 					
 					if(showImg != null && !showImg.isRecycled()){
-						
+
+						ImageInfo perfectImageShowSizeInfo = new ImageInfo(imgShowWidth,imgShowHeight);
+
 						//3.将map等比例缩放到接近屏幕的宽和高
-						ImageInfo imgInfo = ImageInfo.getBitmapScaleInfo(showImg, new ImageInfo(imgShowWidth,imgShowHeight));
-						
+						ImageInfo realImageShowSizeInfo = perfectImageShowSizeInfo.getBitmapScaleInfo(showImg);
+
 						setWhisperImageViewScaleType(ScaleType.MATRIX);
 						
 						updateWhisperImageView(showImg);
@@ -259,11 +261,11 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Whi
 						//Get the image's rect
 						RectF drawableRect = new RectF(0, 0, showImg.getWidth(), showImg.getHeight());
 						       
-						int xOffSet = (whisperImg.getWidth() - imgInfo.getImageWidth())/2;
-						int yOffSet = (whisperImg.getHeight() - imgInfo.getImageHeight())/2;
+						int xOffSet = (whisperImg.getWidth() - realImageShowSizeInfo.getImageWidth())/2;
+						int yOffSet = (whisperImg.getHeight() - realImageShowSizeInfo.getImageHeight())/2;
 						
 						//Get the image view's rect
-						RectF viewRect = new RectF(xOffSet, yOffSet, imgInfo.getImageWidth(),imgInfo.getImageHeight());
+						RectF viewRect = new RectF(xOffSet, yOffSet, realImageShowSizeInfo.getImageWidth(),realImageShowSizeInfo.getImageHeight());
 								
 						//draw the image in the view
 						matrix.setRectToRect(drawableRect, viewRect, Matrix.ScaleToFit.START);
