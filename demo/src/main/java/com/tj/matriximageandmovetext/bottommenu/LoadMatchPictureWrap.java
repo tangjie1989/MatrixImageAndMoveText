@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -45,15 +46,15 @@ public class LoadMatchPictureWrap {
 	
 	public interface LoadMatchPictureWrapDelegate{
 		
-		public ImageView getWhisperShowImageView();
+		ImageView getWhisperShowImageView();
 		
-		public void updateMatchWhisperCoverText(TextView coverText);
+		void updateMatchWhisperCoverText(TextView coverText);
 		
-		public void setWhisperShowImageViewScaleType(ScaleType scaleType);
+		void setWhisperShowImageViewScaleType(ScaleType scaleType);
 		
-		public void updateWhisperShowImageView(Bitmap showImg);
+		void updateWhisperShowImageView(Bitmap showImg);
 		
-		public void updateWhisperShowImageId(String imgId);
+		void updateWhisperShowImageId(String imgId);
 		
 	}
 	
@@ -75,14 +76,13 @@ public class LoadMatchPictureWrap {
 	
 	private View loadingView;
 	private ProgressWheel progressWheel;
-	private Button cancelLoad;
-	
+
 	private void initLoadingView(){
 		
 		loadingView = loadMatchPictureWrapNeedParams.getInflater().inflate(R.layout.activity_whisper_publish_new_loading_layout, null);
 		
 		progressWheel = (ProgressWheel)loadingView.findViewById(R.id.whisper_load_match_picture_progress);
-		cancelLoad = (Button)loadingView.findViewById(R.id.whisper_cancel_load_match_picture);
+		Button cancelLoad = (Button)loadingView.findViewById(R.id.whisper_cancel_load_match_picture);
 		
 		cancelLoad.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -120,82 +120,10 @@ public class LoadMatchPictureWrap {
 		matchPics.add(p4);
 		matchPics.add(p5);
 
-		loadLastImg();
+		progressWheel.setProgress((int)(360.0*25/100));
+		progressWheel.setText("25%");
 
-//			System.out.println("\r\nloadMatchPictureUrls : " + content);
-		
-//		HashMap<String, String> bodyMap = new HashMap<String, String>();
-//
-//		bodyMap.put("content", content);
-//
-//		StringEntity stringEntity = RequestPostJsonWrap
-//				.generateCommonPostEntity(loadMatchPictureWrapNeedParams.getContext(),
-//						loadMatchPictureWrapNeedParams.getWhisperPublishNeedParams().getLoadMatchPicRequestType(),
-//						loadMatchPictureWrapNeedParams.getWhisperPublishNeedParams().getPostUrlParams().get(WhisperPublishNeedParams.USER_TOKEN), null, bodyMap);
-//
-//		if(stringEntity == null){
-//			return;
-//		}
-//
-//		WhisperPublishRequestClient.post(loadMatchPictureWrapNeedParams
-//				.getContext(), loadMatchPictureWrapNeedParams
-//				.getWhisperPublishNeedParams().getProjectDataInterfaceUrl(),
-//				stringEntity, new TextHttpResponseHandler() {
-//
-//			@Override
-//			public void onFailure(int statusCode, Header[] headers,
-//					String responseString, Throwable throwable) {
-//			}
-//
-//			@Override
-//			public void onSuccess(int statusCode, Header[] headers,
-//					String responseString) {
-//
-////				System.out.println("\r\nprogress : " + (int)(360.0*25/100) + responseString);
-//
-//				progressWheel.setProgress((int)(360.0*25/100));
-//				progressWheel.setText("25%");
-//
-//				WhisperMatchPictureBody resultBody = WhisperPublishJsonParser.getWhisperMatchPictureResultFromJson(responseString, cxt);
-//
-//				if(resultBody != null){
-//
-//					ResultHeaderVo resultVo = resultBody.getHeader();
-//					WhisperMatchPictureListVo whisperMatchPictureListVo = resultBody.getBody();
-//
-//					if(resultVo != null){
-//
-//						String result = resultVo.getResult();
-//
-//						if("1".equals(result)){ //先判断返回结果
-//
-//							ArrayList<WhisperMatchPictureVo> matchPhotos = whisperMatchPictureListVo.getPhoto();
-//							if(matchPhotos != null && matchPhotos.size() > 0){
-//								matchPics.addAll(matchPhotos);
-//
-//								loadLastImg();
-//							}
-//							return;
-//
-//						}else{
-//
-//							Toast.makeText(loadMatchPictureWrapNeedParams.getContext(), result, Toast.LENGTH_SHORT).show();
-//							return;
-//						}
-//
-//					}
-//
-//				}
-//
-//				Toast.makeText(loadMatchPictureWrapNeedParams.getContext(), R.string.whipser_publish_request_failure, Toast.LENGTH_SHORT).show();
-//			}
-//
-//			@Override
-//			public void onFinish() {
-//			}
-//
-//		});
-		
+		loadLastImg();
 	}
 
 	
@@ -221,6 +149,8 @@ public class LoadMatchPictureWrap {
 					public void onProgressUpdate(String imageUri, View view,
 							int current, int total) {
 
+						Log.d("Martix", "current = " + current + " total = " + total);
+
 						int preProgress = 90;
 						int picLoadPro = (int) (current * 270.0 / total);
 
@@ -239,7 +169,7 @@ public class LoadMatchPictureWrap {
 	private ViewPager viewPager;
 	private MyPagerAdapter myPagerAdapter;
 	
-	private static int TOTAL_COUNT = 3;
+	private static final int TOTAL_COUNT = 3;
 	
 	public boolean isMatchPictureListExits(){
 		
@@ -282,11 +212,11 @@ public class LoadMatchPictureWrap {
 	}
 	
 	private boolean isMatchListViewNull(){
-		return viewPagerContainer == null ? true : false;
+		return viewPagerContainer == null;
 	}
 	
 	private boolean isMatchListViewShowing(){
-		return (viewPagerContainer.getVisibility() == View.VISIBLE) ? true : false;
+		return (viewPagerContainer.getVisibility() == View.VISIBLE);
 	}
 	
 	private void initMatchPictureList(){
