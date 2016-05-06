@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="whipser_publish_white">#ffffff</color>
+    <color name="whipser_publish_black">#FF000000</color>
+    <color name="whipser_publish_transparent">#00000000</color>
+    <color name="whipser_publish_gray">#FF626262</color>
+
+    <color name="whipser_publish_bg">#0ba8c4</color>
+</resources>

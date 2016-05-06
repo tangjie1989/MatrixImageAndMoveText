@@ -1,0 +1,15 @@
+<resources>
+
+    <dimen name="whipser_publish_top">50dp</dimen>
+    <dimen name="whipser_publish_bottom">40dp</dimen>
+
+    <dimen name="whipser_publish_top_bar_height">50dp</dimen>
+
+    <!-- 发布界面 -->
+    <dimen name="whisper_publish_bottom_font_menu_height">65dp</dimen>
+    <dimen name="whisper_publish_show_default_typeface_size">17sp</dimen>
+    <dimen name="whisper_publish_show_other_typeface_size">19sp</dimen>
+    <dimen name="whipser_publish_pager_margin">45dp</dimen>
+    <dimen name="whipser_publish_page_margin">15dp</dimen>
+
+</resources>
