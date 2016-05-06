@@ -1,11 +1,9 @@
 package com.tj.matriximageandmovetext.bottommenu;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -18,6 +16,8 @@ import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
 import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 import com.tj.matriximageandmovetext.R;
@@ -133,32 +133,43 @@ public class LoadMatchPictureWrap {
 		
 		String url = matchPics.get(matchPics.size() - 1).getUrl();
 		
-		ImageLoader.getInstance().displayImage(url, getWhisperImageView(),null,
-				new ImageLoadListenerAbastractImpl() {
-					@Override
-					public void onLoadingComplete(String imageUri, View view,
-							Bitmap loadedImage) {
-						if(loadingView != null && loadingView.getParent() != null){
-							initMatchPictureList();
-						}
-						loadMatchPictureWrapDelegate.updateWhisperShowImageId(matchPics.get(matchPics.size() - 1).getId());
-					}
-				}, new ImageLoadingProgressListener() {
+		ImageLoader.getInstance().displayImage(url, getWhisperImageView(), ImageLoadingConfig.generateDisplayImageOptions(), new ImageLoadingListener() {
 
-					@Override
-					public void onProgressUpdate(String imageUri, View view,
-							int current, int total) {
+			@Override
+			public void onLoadingStarted(String imageUri, View view) {
+				progressWheel.setText("0%");
+				progressWheel.setVisibility(View.VISIBLE);
+			}
 
-						Log.d("Martix", "current = " + current + " total = " + total);
+			@Override
+			public void onLoadingFailed(String imageUri, View view,
+										FailReason failReason) {
+			}
 
-						int preProgress = 90;
-						int picLoadPro = (int) (current * 270.0 / total);
+			@Override
+			public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+				if(loadingView != null && loadingView.getParent() != null){
+					initMatchPictureList();
+				}
+				loadMatchPictureWrapDelegate.updateWhisperShowImageId(matchPics.get(matchPics.size() - 1).getId());
+			}
 
-						progressWheel.setProgress(picLoadPro + preProgress);
-						progressWheel.setText((int) ((picLoadPro + preProgress) * 100.0 / 360.0)+ "%");
+			@Override
+			public void onLoadingCancelled(String imageUri, View view) {
+			}
+		}, new ImageLoadingProgressListener() {
+			@Override
+			public void onProgressUpdate(String imageUri, View view,
+										 int current, int total) {
 
-					}
-				});
+				int preProgress = 90;
+				int picLoadPro = (int) (current * 270.0 / total);
+
+				progressWheel.setProgress(picLoadPro + preProgress);
+				progressWheel.setText((int) ((picLoadPro + preProgress) * 100.0 / 360.0)+ "%");
+
+			}
+		});
 		
 	}
 	
