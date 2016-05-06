@@ -1,9 +1,7 @@
 package com.tj.matriximageandmovetext;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -13,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,8 +27,6 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.tj.matriximageandmovetext.base.ImageLoadingConfig;
-import com.tj.matriximageandmovetext.bottommenu.BottomMenuFontNeedParams;
-import com.tj.matriximageandmovetext.bottommenu.BottomMenuFontWrap;
 import com.tj.matriximageandmovetext.bottommenu.SelectAndUploadWhisperImgWrap;
 import com.tj.matriximageandmovetext.bottommenu.WhisperCoverTextViewStatusUpdate;
 import com.tj.matriximageandmovetext.bottommenu.WhisperCoverTextViewStatusUpdateNeedParams;
@@ -48,7 +43,8 @@ import java.lang.reflect.Field;
  * 
  */
 
-public abstract class WhisperPublishBaseActivity extends Activity implements BottomMenuFontWrap.BottomMenuFontDelegate, WhisperCoverTextViewStatusUpdate.WhisperCoverTextViewStatusUpdateDelegate, SelectAndUploadWhisperImgWrap.SelectAndUploadWhisperImgWrapDelegate {
+public abstract class WhisperPublishBaseActivity extends Activity implements WhisperCoverTextViewStatusUpdate.WhisperCoverTextViewStatusUpdateDelegate,
+		SelectAndUploadWhisperImgWrap.SelectAndUploadWhisperImgWrapDelegate {
 
 	private RelativeLayout whipserImgContainer;
 	private ImageView whisperImg;
@@ -114,7 +110,6 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Bot
 		
 		initUploadSize();
 		
-//		SaveTTFToLocalUtil.saveTTFToLocal(getApplicationContext(),whisperPublishNeedParams.getTtfLocalSavePath());
 	}
 	
 	private void initUploadSize(){
@@ -146,8 +141,6 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Bot
 	
 	protected void initView(){
 		
-		RelativeLayout whipserPublishContainer = (RelativeLayout)findViewById(R.id.whipser_img_publish_container);
-		
 		whipserImgContainer = (RelativeLayout)findViewById(R.id.whisper_img_container);
 		whisperImg = (ImageView)findViewById(R.id.whisper_img);
 		whisperProcessImgLoadingBar = (ProgressBar)findViewById(R.id.whisper_img_process_loading_bar);
@@ -159,8 +152,6 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Bot
 						imgShowWidth, imgShowHeight, textTopPadding,
 						textBottomPading), this);
 		
-		bottomMenuFontWrap = new BottomMenuFontWrap(new BottomMenuFontNeedParams(this, inflater, whipserPublishContainer, whisperPublishNeedParams, this));
-		
 		selectAndUploadWhisperImgWrap = new SelectAndUploadWhisperImgWrap(whisperPublishNeedParams,this,this);
 		
 		whisperImg.setOnClickListener(new OnClickListener() {
@@ -169,14 +160,9 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Bot
 				if(whisperImgCoverText.getVisibility() == View.VISIBLE){
 					whisperImgCoverText.setVisibility(View.GONE);
 					whisperImgCoverTextEdit.setVisibility(View.VISIBLE);
-					
 					SoftInputUtils.openInput(WhisperPublishBaseActivity.this,whisperImgCoverTextEdit);
-					
-					hideBottomMenuFont();
 				}else{
-					
 					mesureTextViewSizeAndPostion();
-					
 				}
 			}
 		});
@@ -185,8 +171,7 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Bot
 		whisperBackText.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				finish();
-				showCancelDialog();
+				finish();
 			}
 		});
 		
@@ -217,8 +202,6 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Bot
 				
 				hiddeMatchPictureList();//隐藏匹配图片列表
 				
-				hideBottomMenuFont();//隐藏字体菜单
-				
 				if(!isNeedLoadMatchPicture()){//isNeedLoadMatchPicture
 					selectAndUploadWhisperImgWrap.showSelectDialog();
 				}
@@ -226,10 +209,6 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Bot
 		});
 		
 		whisperCoverTextViewStatusUpdate.initTextMove();
-		
-		bottomMenuFontWrap.init();
-		
-		setDefaultCoverTextStatus();
 	}
 	
 	protected ImageView getWhisperImageView(){
@@ -330,8 +309,6 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Bot
 		selectAndUploadWhisperImgWrap.onActivityResult(requestCode, resultCode, data);
 	}
 	
-	//-----------------------------悠悠话图片相册选择和发布
-	
 	private SelectAndUploadWhisperImgWrap selectAndUploadWhisperImgWrap;
 	
 	@Override
@@ -363,24 +340,6 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Bot
 		return getWhisperImgCoverTextEditString();
 	}
 	
-	//--------------------------字体部分
-	
-	private BottomMenuFontWrap bottomMenuFontWrap;
-	
-	private void setDefaultCoverTextStatus(){
-		bottomMenuFontWrap.setWhisperCoverTextDefaultStatus();
-	}
-	
-	protected void hideBottomMenuFont(){
-		bottomMenuFontWrap.hideBottomMenuFont();
-	}
-	
-	protected void updateMatchWhisperCoverTextAttribute(TextView coverText){
-		bottomMenuFontWrap.updateMatchWhisperCoverTextAttribute(coverText);
-	}
-	
-	//BottomMenuFontDelegate
-	
 	@Override
 	public String getWhisperImgCoverTextString() {
 		return getWhisperImgCoverTextEditString();
@@ -391,11 +350,10 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Bot
 		return whisperImgCoverText;
 	}
 
-	@Override
-	public void updateWhisperCoverTextViewStatus() {
-		mesureTextViewSizeAndPostion();
+	protected void updateMatchWhisperCoverTextAttribute(TextView coverText){
+		coverText.setText(getWhisperImgCoverTextEditString());
 	}
-	
+
 	//------------------------coverTextView状态封装(移动，大小更新)
 	
 	private WhisperCoverTextViewStatusUpdate whisperCoverTextViewStatusUpdate;
@@ -407,11 +365,6 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Bot
 		return whisperImgCoverTextEdit;
 	}
 
-	@Override
-	public void hiddenBottomMenuFontView() {
-		hideBottomMenuFont();
-	}
-	
 	private void mesureTextViewSizeAndPostion(){
 		whisperCoverTextViewStatusUpdate.mesureTextViewSizeAndPostion();
 		
@@ -419,40 +372,12 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Bot
 			loadMatchPictureUrls(getWhisperImgCoverTextEditString(), this);
 		}
 	}
-	
-	
+
 	//------------------------ 匹配图加载部分------------------
 	
 	//加载匹配图数据
 	public abstract void loadMatchPictureUrls(String content, Context cxt);
 	
 	public abstract void hiddeMatchPictureList();
-	
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			showCancelDialog();
-			return true;
-		}
-		return super.onKeyDown(keyCode, event);
-	}
-
-	//显示退出对话框
-	public void showCancelDialog(){
-
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage(R.string.activity_whisper_cancel_publish);
-		builder.setNegativeButton(R.string.activity_whisper_cancel_publish_no, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				dialog.cancel();
-			}
-		});
-		builder.setPositiveButton(R.string.activity_whisper_cancel_publish_yes, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				finish();
-			}
-		});
-		builder.show();
-	}
 
 }

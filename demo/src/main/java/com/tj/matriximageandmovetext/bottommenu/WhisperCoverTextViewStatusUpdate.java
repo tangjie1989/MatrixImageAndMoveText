@@ -27,14 +27,11 @@ public class WhisperCoverTextViewStatusUpdate {
 
 	public interface WhisperCoverTextViewStatusUpdateDelegate {
 
-		public EditText getWhisperImgCoverTextEdit();
+		EditText getWhisperImgCoverTextEdit();
 
-		public String getWhisperImgCoverTextString();
+		String getWhisperImgCoverTextString();
 		
-		public TextView getWhisperImgCoverText();
-
-		public void hiddenBottomMenuFontView();
-
+		TextView getWhisperImgCoverText();
 	}
 
 	// --------------------------------------文字拖动和字体切换时，重新计算textview大小和位置
@@ -150,9 +147,6 @@ public class WhisperCoverTextViewStatusUpdate {
 					break;
 				// 手指在屏幕上移动
 				case MotionEvent.ACTION_MOVE:
-
-					whisperCoverTextViewStatusUpdateDelegate
-							.hiddenBottomMenuFontView();
 
 					int newX = (int) event.getRawX();
 					int newY = (int) event.getRawY();

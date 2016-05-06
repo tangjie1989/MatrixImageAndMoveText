@@ -1,17 +1,16 @@
 package com.tj.matriximageandmovetext;
 
-import java.io.File;
-
 import android.content.Context;
 import android.os.Environment;
-import android.util.Log;
 
 import com.tj.matriximageandmovetext.util.DeviceInfoUtil;
+
+import java.io.File;
 
 public class MartixLocalStorageUtil {
 
 	// SD卡文件根目录
-	private static String BASE_DIR = "MiYouQuan";
+	private static String BASE_DIR = "Martix";
 	
 	// 缓存目录
 	private static final String FILE_CACHE_DIR = "caches";
@@ -97,14 +96,12 @@ public class MartixLocalStorageUtil {
 		// 初始化根目录
 		File basePath = new File(getSdcardCacheBaseAbsolutePath());
 		if (!basePath.exists()) {
-			Log.d("Martix", "init basePath = " + getSdcardCacheBaseAbsolutePath());
-			Log.d("Martix", "init status " + basePath.mkdir());
+			basePath.mkdir();
 		}
 
 		// 图片缓存目录
 		File imgCachePath = new File(getImageCacheAbsoluteDir());
 		if (!imgCachePath.exists()) {
-			Log.d("Martix", "init imgCachePath = " + getImageCacheAbsoluteDir());
 			imgCachePath.mkdir();
 		}
 

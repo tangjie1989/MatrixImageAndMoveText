@@ -15,10 +15,10 @@ public class MartixApplication extends Application {
 	
 	private static MartixApplication instance;
 	
-	private MartixLocalStorageUtil miYouQuanLocalStorageUtil;
+	private MartixLocalStorageUtil martixLocalStorageUtil;
 
 	public MartixLocalStorageUtil getMartixLocalStorageUtil() {
-		return miYouQuanLocalStorageUtil;
+		return martixLocalStorageUtil;
 	}
 
 	public static MartixApplication getInstance() {
@@ -32,15 +32,15 @@ public class MartixApplication extends Application {
 		
 		instance = this;
 		
-		miYouQuanLocalStorageUtil = new MartixLocalStorageUtil();
-		miYouQuanLocalStorageUtil.initLocalDir(this);
+		martixLocalStorageUtil = new MartixLocalStorageUtil();
+		martixLocalStorageUtil.initLocalDir(this);
 
 		initImageLoader(getApplicationContext());
 	}
 
 	public void initImageLoader(Context context) {
 		
-		File cacheDir = new File(miYouQuanLocalStorageUtil.getImageCacheAbsoluteDir());
+		File cacheDir = new File(martixLocalStorageUtil.getImageCacheAbsoluteDir());
 		
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
 				.threadPriority(Thread.NORM_PRIORITY - 2)

@@ -38,7 +38,6 @@ public class WhisperPublishActivityNew extends WhisperPublishBaseActivity implem
 			@Override
 			public void onClick(View v) {
 				if(loadMatchPictureWrap.isMatchPictureListExits()){
-					hideBottomMenuFont();//隐藏字体菜单
 				}
 			}
 		});
@@ -86,12 +85,12 @@ public class WhisperPublishActivityNew extends WhisperPublishBaseActivity implem
 	public ImageView getWhisperShowImageView() {
 		return getWhisperImageView();
 	}
-	
+
 	@Override
-	public void updateMatchWhisperCoverText(TextView coverText){
+	public void updateMatchWhisperCoverText(TextView coverText) {
 		updateMatchWhisperCoverTextAttribute(coverText);
 	}
-	
+
 	@Override
 	public void setWhisperShowImageViewScaleType(ScaleType scaleType){
 		setWhisperImageViewScaleType(scaleType);
