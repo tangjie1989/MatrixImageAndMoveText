@@ -120,9 +120,6 @@ public class LoadMatchPictureWrap {
 		matchPics.add(p4);
 		matchPics.add(p5);
 
-		progressWheel.setProgress((int)(360.0*25/100));
-		progressWheel.setText("25%");
-
 		loadLastImg();
 	}
 
@@ -161,13 +158,9 @@ public class LoadMatchPictureWrap {
 			@Override
 			public void onProgressUpdate(String imageUri, View view,
 										 int current, int total) {
-
-				int preProgress = 90;
-				int picLoadPro = (int) (current * 270.0 / total);
-
-				progressWheel.setProgress(picLoadPro + preProgress);
-				progressWheel.setText((int) ((picLoadPro + preProgress) * 100.0 / 360.0)+ "%");
-
+				int picLoadPro = (int) (current * 360.0 / total);
+				progressWheel.setProgress(picLoadPro);
+				progressWheel.setText((int) (picLoadPro * 100.0 / 360.0)+ "%");
 			}
 		});
 		
