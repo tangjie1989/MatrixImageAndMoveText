@@ -232,7 +232,7 @@ public class LoadMatchPictureWrap {
 	
 	private void initMatchPictureList(){
 		
-		ViewGroup whipserImgPublishContainer = (ViewGroup)loadMatchPictureWrapNeedParams.getWhipserImgPublishContainer();
+		RelativeLayout whipserImgPublishContainer = loadMatchPictureWrapNeedParams.getWhipserImgPublishContainer();
 		
 		viewPager = (ViewPager) whipserImgPublishContainer.findViewById(R.id.view_pager);
 		viewPagerContainer = (RelativeLayout) whipserImgPublishContainer.findViewById(R.id.pager_layout);
@@ -274,7 +274,7 @@ public class LoadMatchPictureWrap {
 			
 			WhisperMatchPictureVo vo = matchPics.get(position);
 			
-			RelativeLayout viewContainer = (RelativeLayout)loadMatchPictureWrapNeedParams.getInflater().inflate(R.layout.activity_whisper_publish_new_match_picture_list_item,null);
+			RelativeLayout viewContainer = (RelativeLayout)loadMatchPictureWrapNeedParams.getInflater().inflate(R.layout.activity_whisper_publish_new_match_picture_list_item, null);
 			
 			viewContainer.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -295,15 +295,15 @@ public class LoadMatchPictureWrap {
 			
 			whisperBigPhotoLoadWrap.initLoadProgressWheel(viewContainer);
 			whisperBigPhotoLoadWrap.loadWhisperBigPhoto();
-			
-			((ViewPager) container).addView(viewContainer, 0);
+
+			container.addView(viewContainer, 0);
 			return viewContainer;
 
 		}
 
 		@Override
 		public void destroyItem(ViewGroup container, int position, Object object) {
-			((ViewPager) container).removeView((RelativeLayout) object);
+			container.removeView((RelativeLayout) object);
 		}
 	}
 	 

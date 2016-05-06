@@ -68,8 +68,8 @@ public class WhisperBigPhotoLoadWrap {
 			}
 			
 			@Override
-			public void onLoadingCancelled(String imageUri, View view) {
-			}
+			public void onLoadingCancelled(String imageUri, View view) {}
+
 		}, new ImageLoadingProgressListener() {
 			@Override
 			public void onProgressUpdate(String imageUri, View view,
