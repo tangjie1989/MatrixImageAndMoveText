@@ -1,11 +1,5 @@
 package com.tj.matriximageandmovetext.vo;
 
-/**
- * 悠悠话匹配图vo
- * 
- * @author tangjie
- * 
- */
 public class WhisperMatchPictureVo {
 
 	private String id;

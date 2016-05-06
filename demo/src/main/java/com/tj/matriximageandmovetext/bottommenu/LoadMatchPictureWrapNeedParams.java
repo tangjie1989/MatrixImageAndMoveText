@@ -28,34 +28,16 @@ public class LoadMatchPictureWrapNeedParams {
 		return whisperPublishNeedParams;
 	}
 
-	public void setWhisperPublishNeedParams(
-			WhisperPublishNeedParams whisperPublishNeedParams) {
-		this.whisperPublishNeedParams = whisperPublishNeedParams;
-	}
-
 	public RelativeLayout getWhipserImgPublishContainer() {
 		return whipserImgPublishContainer;
-	}
-
-	public void setWhipserImgPublishContainer(
-			RelativeLayout whipserImgPublishContainer) {
-		this.whipserImgPublishContainer = whipserImgPublishContainer;
 	}
 
 	public Context getContext() {
 		return context;
 	}
 
-	public void setContext(Context context) {
-		this.context = context;
-	}
-
 	public LayoutInflater getInflater() {
 		return inflater;
-	}
-
-	public void setInflater(LayoutInflater inflater) {
-		this.inflater = inflater;
 	}
 
 }
