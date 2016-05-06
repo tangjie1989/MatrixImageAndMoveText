@@ -60,8 +60,7 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Bot
 	private ImageButton whisperSubmitText;
 	
 	private LinearLayout whisperChangeImg;
-	private LinearLayout whisperChangeColor;
-	
+
 	private String imgId;//记录当前选中的匹配图img id
 	
 	public Handler getHandler() {
@@ -223,18 +222,6 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Bot
 				if(!isNeedLoadMatchPicture()){//isNeedLoadMatchPicture
 					selectAndUploadWhisperImgWrap.showSelectDialog();
 				}
-			}
-		});
-		
-		whisperChangeColor = (LinearLayout)findViewById(R.id.whisper_publish_change_color);
-		whisperChangeColor.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				
-				hiddeMatchPictureList();//隐藏匹配图片列表
-				
-				bottomMenuFontWrap.operationBottomMenuFont();
-				
 			}
 		});
 		

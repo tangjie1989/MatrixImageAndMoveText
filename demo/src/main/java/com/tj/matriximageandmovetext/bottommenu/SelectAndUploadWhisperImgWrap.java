@@ -63,7 +63,7 @@ public class SelectAndUploadWhisperImgWrap {
 	}
 	
 	private String getSubjectId(){
-		return whisperPublishNeedParams.getPostUrlParams().get(WhisperPublishNeedParams.SUBJECT_ID);
+		return "11";//whisperPublishNeedParams.getPostUrlParams().get(WhisperPublishNeedParams.SUBJECT_ID)
 	}
 	
 	private ProgressDialog uploadingDialog;
