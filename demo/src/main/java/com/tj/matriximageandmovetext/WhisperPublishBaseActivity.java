@@ -369,14 +369,14 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Whi
 		whisperCoverTextViewStatusUpdate.mesureTextViewSizeAndPostion();
 		
 		if (!TextUtils.isEmpty(getWhisperImgCoverTextEditString()) && isNeedLoadMatchPicture()) {//isNeedLoadMatchPicture
-			loadMatchPictureUrls(getWhisperImgCoverTextEditString(), this);
+			loadMatchPictureUrls();
 		}
 	}
 
 	//------------------------ 匹配图加载部分------------------
 	
 	//加载匹配图数据
-	public abstract void loadMatchPictureUrls(String content, Context cxt);
+	public abstract void loadMatchPictureUrls();
 	
 	public abstract void hiddeMatchPictureList();
 

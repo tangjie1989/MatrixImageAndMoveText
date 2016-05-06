@@ -102,7 +102,7 @@ public class LoadMatchPictureWrap {
 	private ArrayList<WhisperMatchPictureVo> matchPics = new ArrayList<WhisperMatchPictureVo>();
 	
 	//加载匹配图数据
-	public void loadMatchPictureUrls(String content, final Context cxt){
+	public void loadMatchPictureUrls(){
 		
 		isNeedLoadMatchPicture = false;
 		

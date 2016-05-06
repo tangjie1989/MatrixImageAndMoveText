@@ -68,10 +68,10 @@ public class WhisperPublishActivityNew extends WhisperPublishBaseActivity implem
 	}
 	
 	@Override
-	public void loadMatchPictureUrls(String content, Context cxt){
-		loadMatchPictureWrap.loadMatchPictureUrls(content, cxt);
+	public void loadMatchPictureUrls(){
+		loadMatchPictureWrap.loadMatchPictureUrls();
 	}
-	
+
 	@Override
 	public void hiddeMatchPictureList(){
 		if(whisperChangeMatchImg != null){
