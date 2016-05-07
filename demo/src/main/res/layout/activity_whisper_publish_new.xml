@@ -103,56 +103,28 @@
         android:background="@color/whipser_publish_white"
         android:orientation="horizontal">
 
-        <LinearLayout
+        <TextView
             android:id="@+id/whisper_publish_change_match_img"
-            android:layout_width="0dp"
+            android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginRight="7dp"
-                android:src="@drawable/whipser_publish_yoyo_match_btn" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="7dp"
-                android:gravity="center"
-                android:text="@string/activity_whisper_publish_new_change_pic"
-                android:textSize="15sp" />
-        </LinearLayout>
+            android:text="@string/activity_whisper_publish_new_change_pic"
+            android:textSize="15sp" />
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
             android:background="#8c8c8c" />
 
-        <LinearLayout
+        <TextView
             android:id="@+id/whisper_publish_change_img"
-            android:layout_width="0dp"
+            android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginRight="7dp"
-                android:src="@drawable/whipser_publish_yoyo_filter_btn" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="7dp"
-                android:gravity="center"
-                android:text="@string/activity_whisper_album"
-                android:textSize="15sp" />
-        </LinearLayout>
+            android:text="@string/activity_whisper_album"
+            android:textSize="15sp" />
     </LinearLayout>
 
     <RelativeLayout
@@ -163,7 +135,6 @@
         android:layout_below="@id/whisper_publish_title_bar"
         android:background="@color/whipser_publish_transparent"
         android:clipChildren="false"
-        android:layerType="software"
         android:paddingBottom="20dp"
         android:paddingTop="20dp"
         android:visibility="gone">

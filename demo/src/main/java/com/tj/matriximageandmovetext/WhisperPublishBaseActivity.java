@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -188,12 +187,12 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Whi
 			}
 		});
 
-		LinearLayout whisperChangeImg = (LinearLayout)findViewById(R.id.whisper_publish_change_img);
+		View whisperChangeImg = findViewById(R.id.whisper_publish_change_img);
 		whisperChangeImg.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				
-				hiddeMatchPictureList();//隐藏匹配图片列表
+				hiddeMatchPictureList();
 				
 				if(!isNeedLoadMatchPicture()){//isNeedLoadMatchPicture
 					selectAndUploadWhisperImgWrap.showSelectDialog();

@@ -108,7 +108,7 @@ public class LoadMatchPictureWrap {
 		
 		initLoadingView();
 
-		WhisperMatchPictureVo p1 = new WhisperMatchPictureVo("1", "http://scimg.jb51.net/allimg/160317/14-16031G13220936.jpg");
+		WhisperMatchPictureVo p1 = new WhisperMatchPictureVo("1", "http://img3.imgtn.bdimg.com/it/u=1681882397,3535453166&fm=11&gp=0.jpg");
 		WhisperMatchPictureVo p2 = new WhisperMatchPictureVo("2", "http://img15.3lian.com/2015/f2/50/d/72.jpg");
 		WhisperMatchPictureVo p3 = new WhisperMatchPictureVo("3", "http://img15.3lian.com/2015/f2/50/d/71.jpg");
 		WhisperMatchPictureVo p4 = new WhisperMatchPictureVo("4", "http://img15.3lian.com/2015/f2/50/d/75.jpg");

@@ -1,13 +1,11 @@
 package com.tj.matriximageandmovetext;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,7 +17,7 @@ public class WhisperPublishActivityNew extends WhisperPublishBaseActivity implem
 
 	private LoadMatchPictureWrap loadMatchPictureWrap;
 	
-	private LinearLayout whisperChangeMatchImg;
+	private View whisperChangeMatchImg;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +31,7 @@ public class WhisperPublishActivityNew extends WhisperPublishBaseActivity implem
 				new LoadMatchPictureWrapNeedParams(getWhisperPublishNeedParams(),
 						whipserImgPublishContainer, this, getInflater()), this);
 		
-		whisperChangeMatchImg = (LinearLayout)findViewById(R.id.whisper_publish_change_match_img);
+		whisperChangeMatchImg = findViewById(R.id.whisper_publish_change_match_img);
 		whisperChangeMatchImg.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
