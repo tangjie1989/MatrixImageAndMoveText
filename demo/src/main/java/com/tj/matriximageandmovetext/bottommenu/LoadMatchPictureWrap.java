@@ -53,9 +53,6 @@ public class LoadMatchPictureWrap {
 		void setWhisperShowImageViewScaleType(ScaleType scaleType);
 		
 		void updateWhisperShowImageView(Bitmap showImg);
-		
-		void updateWhisperShowImageId(String imgId);
-		
 	}
 	
 	private boolean isNeedLoadMatchPicture = true;//是否需要load匹配图标识 主题图片发布不需要/普通悠悠话发布需要
@@ -148,7 +145,6 @@ public class LoadMatchPictureWrap {
 				if(loadingView != null && loadingView.getParent() != null){
 					initMatchPictureList();
 				}
-				loadMatchPictureWrapDelegate.updateWhisperShowImageId(matchPics.get(matchPics.size() - 1).getId());
 			}
 
 			@Override
@@ -363,7 +359,6 @@ public class LoadMatchPictureWrap {
 		if(isCacheContainersBitmap(url)){
 			hiddeMatchPictureList();
 			loadMatchPictureWrapDelegate.updateWhisperShowImageView(cacheBitmaps.get(0));
-			loadMatchPictureWrapDelegate.updateWhisperShowImageId(matchPics.get(postion).getId());
 			return;
 		}
 		

@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.tj.matriximageandmovetext.bottommenu.LoadMatchPictureWrap;
 import com.tj.matriximageandmovetext.bottommenu.LoadMatchPictureWrapNeedParams;
-import com.tj.matriximageandmovetext.util.SoftInputUtils;
 
 public class WhisperPublishActivityNew extends WhisperPublishBaseActivity implements LoadMatchPictureWrap.LoadMatchPictureWrapDelegate {
 
@@ -39,15 +38,6 @@ public class WhisperPublishActivityNew extends WhisperPublishBaseActivity implem
 				}
 			}
 		});
-		
-		getHandler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				getWhisperImgCoverTextEdit().requestFocus();
-				SoftInputUtils.openInput(WhisperPublishActivityNew.this);
-			}
-		}, 500);
-		
 	}
 	
 	@Override
@@ -98,8 +88,5 @@ public class WhisperPublishActivityNew extends WhisperPublishBaseActivity implem
 	public void updateWhisperShowImageView(Bitmap showImg){
 		updateWhisperImageView(showImg);
 	}
-	
-	public void updateWhisperShowImageId(String imgId){
-		updateWhisperImageId(imgId);
-	}
+
 }

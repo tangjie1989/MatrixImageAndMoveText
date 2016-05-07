@@ -6,8 +6,8 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.RectF;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -50,17 +50,10 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Whi
 	private EditText whisperImgCoverTextEdit;
 	private TextView whisperImgCoverText;
 	
-	private String imgId;//记录当前选中的匹配图img id
-
-	public Handler getHandler() {
-		return handler;
-	}
-
 	public LayoutInflater getInflater() {
 		return inflater;
 	}
 
-	private Handler handler = new Handler();
 	private LayoutInflater inflater;
 	
 	private int imgShowWidth;//图片显示宽度
@@ -215,10 +208,6 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Whi
 		whisperImg.setImageBitmap(img);
 	}
 	
-	protected void updateWhisperImageId(String img){
-		this.imgId = img;
-	}
-	
 	private String getWhisperImgCoverTextEditString(){
 		String str = whisperImgCoverTextEdit.getText().toString();
 		if(!TextUtils.isEmpty(str)){
@@ -227,78 +216,68 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Whi
 			return "";
 		}
 	}
-	
-	//显示发布图片线程
-	private class generateWhisperPublishImgThread extends Thread{
-		
+
+	private class RefreshWhisperImageViewTask extends AsyncTask<Void, Integer, Bitmap> {
+
 		@Override
-		public void run() {
-			
-			updateWhisperImageId(null);
-			
+		protected Bitmap doInBackground(Void... params) {
 			ImageSize targetSize = new ImageSize(imgShowWidth, imgShowHeight); // result Bitmap will be fit to this size
-			
-			final Bitmap showImg = ImageLoader.getInstance().loadImageSync("file://"+ getImgPath(), targetSize, ImageLoadingConfig.generateDisplayImageOptionsNoCatchDisc());
-			
-			handler.post(new Runnable() {
-				@Override
-				public void run() {
-					
-					if(showImg != null && !showImg.isRecycled()){
+			return ImageLoader.getInstance().loadImageSync("file://"+ getImgPath(), targetSize, ImageLoadingConfig.generateDisplayImageOptionsNoCatchDisc());
+		}
 
-						ImageInfo perfectImageShowSizeInfo = new ImageInfo(imgShowWidth,imgShowHeight);
+		@Override
+		protected void onPostExecute(Bitmap showImg) {
+			if(showImg != null && !showImg.isRecycled()){
 
-						//3.将map等比例缩放到接近屏幕的宽和高
-						ImageInfo realImageShowSizeInfo = perfectImageShowSizeInfo.getBitmapScaleInfo(showImg);
+				ImageInfo perfectImageShowSizeInfo = new ImageInfo(imgShowWidth,imgShowHeight);
 
-						setWhisperImageViewScaleType(ScaleType.MATRIX);
-						
-						updateWhisperImageView(showImg);
-						
-						Matrix matrix = new Matrix(); 
-						
-						//Get the image's rect
-						RectF drawableRect = new RectF(0, 0, showImg.getWidth(), showImg.getHeight());
-						       
-						int xOffSet = (whisperImg.getWidth() - realImageShowSizeInfo.getImageWidth())/2;
-						int yOffSet = (whisperImg.getHeight() - realImageShowSizeInfo.getImageHeight())/2;
-						
-						//Get the image view's rect
-						RectF viewRect = new RectF(xOffSet, yOffSet, realImageShowSizeInfo.getImageWidth(),realImageShowSizeInfo.getImageHeight());
-								
-						//draw the image in the view
-						matrix.setRectToRect(drawableRect, viewRect, Matrix.ScaleToFit.START);
-						
-						whisperImg.setImageMatrix(matrix);
-						whisperImg.invalidate();
-						
-						whisperProcessImgLoadingBar.setVisibility(View.GONE);
-						
-						whisperImg.setVisibility(View.VISIBLE);
-						
-						isShowSoftKeyBoard();
-					}else{
-						Toast.makeText(getApplicationContext(), "图片处理失败", Toast.LENGTH_SHORT).show();
-						finish();
-					}
-				}
-			});
+				//3.将map等比例缩放到接近屏幕的宽和高
+				ImageInfo realImageShowSizeInfo = perfectImageShowSizeInfo.getBitmapScaleInfo(showImg);
+
+				setWhisperImageViewScaleType(ScaleType.MATRIX);
+
+				updateWhisperImageView(showImg);
+
+				Matrix matrix = new Matrix();
+
+				//Get the image's rect
+				RectF drawableRect = new RectF(0, 0, showImg.getWidth(), showImg.getHeight());
+
+				int xOffSet = (whisperImg.getWidth() - realImageShowSizeInfo.getImageWidth())/2;
+				int yOffSet = (whisperImg.getHeight() - realImageShowSizeInfo.getImageHeight())/2;
+
+				//Get the image view's rect
+				RectF viewRect = new RectF(xOffSet, yOffSet, realImageShowSizeInfo.getImageWidth(),realImageShowSizeInfo.getImageHeight());
+
+				//draw the image in the view
+				matrix.setRectToRect(drawableRect, viewRect, Matrix.ScaleToFit.START);
+
+				whisperImg.setImageMatrix(matrix);
+				whisperImg.invalidate();
+
+				whisperProcessImgLoadingBar.setVisibility(View.GONE);
+
+				whisperImg.setVisibility(View.VISIBLE);
+
+				isShowSoftKeyBoard();
+			}else{
+				Toast.makeText(getApplicationContext(), "photo handle failure", Toast.LENGTH_SHORT).show();
+			}
 		}
 	}
-	
+
 	public abstract void isShowSoftKeyBoard();
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		
 		selectAndUploadWhisperImgWrap.onActivityResult(requestCode, resultCode, data);
 	}
 	
 	private SelectAndUploadWhisperImgWrap selectAndUploadWhisperImgWrap;
 	
 	@Override
-	public void refreshWhisperImg() {// 刷新发布图片
+	public void refreshWhisperImg() {
 		updateWhisperImageView(null);
 		whisperImg.setVisibility(View.INVISIBLE);
 		whisperImgCoverTextEdit.setVisibility(View.GONE);
@@ -306,7 +285,7 @@ public abstract class WhisperPublishBaseActivity extends Activity implements Whi
 		
 		whisperProcessImgLoadingBar.setVisibility(View.VISIBLE);
 		
-		new generateWhisperPublishImgThread().start();
+		new RefreshWhisperImageViewTask().execute();
 	}
 	
 	@Override
