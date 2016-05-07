@@ -64,20 +64,8 @@ public class SelectAndUploadWhisperImgWrap {
 
 		View view = View.inflate(getContext(), R.layout.upload_whisper_photo_dialog, null);
 		
-		TextView tvTitle = (TextView)view.findViewById(R.id.title);
-		tvTitle.setText("选图");
-
 		TextView tv_album = (TextView) view.findViewById(R.id.tv_album);
 		TextView tv_take = (TextView) view.findViewById(R.id.tv_take);
-		TextView tv_cancel = (TextView) view.findViewById(R.id.tv_cancel);
-		
-		tv_cancel.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				dialog.dismiss();
-			}
-		});
 
 		tv_album.setOnClickListener(new OnClickListener() {
 			@Override
@@ -153,7 +141,6 @@ public class SelectAndUploadWhisperImgWrap {
 		} 
 	}
 
-	// 提交whisper图片
 	public void uploadUserWhisperPhoto(){
 		
 		Bitmap sourceBitmap = selectAndUploadWhisperImgWrapDelegate.takeImageViewParentShot();

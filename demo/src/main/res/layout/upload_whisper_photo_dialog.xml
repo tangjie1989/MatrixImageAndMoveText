@@ -7,14 +7,6 @@
     android:orientation="vertical" >
     
     <TextView
-        android:id="@+id/title"
-        android:layout_width="280dip"
-        android:layout_height="50dip"
-        android:gravity="center"
-        android:textColor="@color/whipser_publish_white"
-        android:textSize="18sp" />
-
-    <TextView
         android:id="@+id/tv_album"
         android:layout_width="280dip"
         android:layout_height="50dip"
@@ -36,16 +28,4 @@
         android:textSize="20sp"
          />
     
-    <TextView
-        android:id="@+id/tv_cancel"
-        android:layout_width="280dip"
-        android:layout_height="50dip"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/whipser_publish_shape_round_corner"
-        android:gravity="center"
-        android:text="@string/whipser_publish_cancel"
-        android:textColor="#2E8EF5"
-        android:textSize="20sp"
-        android:layout_marginBottom="5dp" />
-
 </LinearLayout>
