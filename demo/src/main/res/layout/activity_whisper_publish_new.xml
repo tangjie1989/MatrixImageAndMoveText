@@ -54,7 +54,7 @@
             android:shadowDy="0"
             android:shadowRadius="5"
             android:singleLine="false"
-            android:textColor="@color/whipser_publish_white"
+            android:textColor="@color/whipser_loading_progress_text_color"
             android:textSize="28sp"
             android:visibility="gone" />
     </RelativeLayout>

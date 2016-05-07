@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tj.matriximageandmovetext.R;
+import com.tj.matriximageandmovetext.util.SaveImageToPhotoAlbumUtil;
 import com.tj.matriximageandmovetext.vo.WhisperPublishNeedParams;
 
 import java.io.File;
@@ -158,7 +160,6 @@ public class SelectAndUploadWhisperImgWrap {
 			if(sourceBitmap != null && !sourceBitmap.isRecycled()){
 				sourceBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);//大小压缩
 			}
-
 			try {
 				stream.flush();
 				stream.close();
@@ -168,7 +169,13 @@ public class SelectAndUploadWhisperImgWrap {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		Toast.makeText(getContext(), whisperPublishNeedParams.getSaveWaitUploadPicPath(), Toast.LENGTH_LONG).show();
+
+		String savePath = SaveImageToPhotoAlbumUtil.insertImage(activity, file.getAbsolutePath());
+		if (!TextUtils.isEmpty(savePath)){
+			Toast.makeText(getContext(), "save to " + savePath, Toast.LENGTH_LONG).show();
+		}else{
+			Toast.makeText(getContext(), "save failure...", Toast.LENGTH_LONG).show();
+		}
 	}
 
 }
