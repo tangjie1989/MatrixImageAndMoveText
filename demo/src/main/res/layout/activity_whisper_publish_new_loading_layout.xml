@@ -24,7 +24,7 @@
             ProgressWheel:rimWidth="10dp"
             ProgressWheel:spinSpeed="3dp"
             ProgressWheel:text=""
-            ProgressWheel:textColor1="#222222"
+            ProgressWheel:textColor1="@color/whipser_loading_progress_text_color"
             ProgressWheel:textSize1="14sp" />
 
         <TextView

@@ -6,4 +6,6 @@
     <color name="whipser_publish_gray">#FF626262</color>
 
     <color name="whipser_publish_bg">#0ba8c4</color>
+
+    <color name="whipser_loading_progress_text_color">#ff0000</color>
 </resources>

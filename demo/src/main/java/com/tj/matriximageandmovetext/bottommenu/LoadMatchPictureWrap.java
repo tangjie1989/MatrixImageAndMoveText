@@ -16,14 +16,11 @@ import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
 import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
 import com.tj.matriximageandmovetext.R;
 import com.tj.matriximageandmovetext.base.ImageLoadListenerAbastractImpl;
 import com.tj.matriximageandmovetext.base.ImageLoadingConfig;
-import com.tj.matriximageandmovetext.base.WhisperBigPhotoLoadWrap;
 import com.tj.matriximageandmovetext.vo.WhisperMatchPictureVo;
 import com.tj.matriximageandmovetext.widget.ProgressWheel;
 
@@ -126,8 +123,10 @@ public class LoadMatchPictureWrap {
 	private void loadLastImg(){
 		
 		String url = matchPics.get(matchPics.size() - 1).getUrl();
-		
-		ImageLoader.getInstance().displayImage(url, getWhisperImageView(), ImageLoadingConfig.generateDisplayImageOptions(), new ImageLoadingListener() {
+
+		ImageLoader.getInstance().displayImage(url, getWhisperImageView(),
+				ImageLoadingConfig.generateDisplayImageOptions(),
+				new ImageLoadListenerAbastractImpl() {
 
 			@Override
 			public void onLoadingStarted(String imageUri, View view) {
@@ -136,19 +135,10 @@ public class LoadMatchPictureWrap {
 			}
 
 			@Override
-			public void onLoadingFailed(String imageUri, View view,
-										FailReason failReason) {
-			}
-
-			@Override
 			public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
 				if(loadingView != null && loadingView.getParent() != null){
 					initMatchPictureList();
 				}
-			}
-
-			@Override
-			public void onLoadingCancelled(String imageUri, View view) {
 			}
 		}, new ImageLoadingProgressListener() {
 			@Override
@@ -159,7 +149,6 @@ public class LoadMatchPictureWrap {
 				progressWheel.setText((int) (picLoadPro * 100.0 / 360.0)+ "%");
 			}
 		});
-		
 	}
 	
 	
@@ -273,17 +262,39 @@ public class LoadMatchPictureWrap {
 			});
 			
 			ImageView imageView = (ImageView)viewContainer.findViewById(R.id.whisper_publish_photo);
-			
-			TextView coverText = (TextView)viewContainer.findViewById(R.id.whisper_img_cover_text);
-			coverText.setTag("text" + position);
-			
-			WhisperBigPhotoLoadWrap whisperBigPhotoLoadWrap = new WhisperBigPhotoLoadWrap(
-					imageView, vo.getUrl(),
-					ImageLoadingConfig.generateDisplayImageOptions(), position,
-					new WhisperBigPhotoLoadWrapDelegateImpl());
-			
-			whisperBigPhotoLoadWrap.initLoadProgressWheel(viewContainer);
-			whisperBigPhotoLoadWrap.loadWhisperBigPhoto();
+			final TextView coverText = (TextView)viewContainer.findViewById(R.id.whisper_img_cover_text);
+			final ProgressWheel progressWheel = (ProgressWheel)viewContainer.findViewById(R.id.whisper_publish_photo_load_progress);
+			progressWheel.setProgress(0);
+			progressWheel.setText("0%");
+
+			ImageLoader.getInstance().displayImage(vo.getUrl(), imageView,
+					ImageLoadingConfig.generateDisplayImageOptions(),
+					new ImageLoadListenerAbastractImpl() {
+
+						@Override
+						public void onLoadingStarted(String imageUri, View view) {
+							progressWheel.setText("0%");
+							progressWheel.setVisibility(View.VISIBLE);
+						}
+
+						@Override
+						public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+							progressWheel.setVisibility(View.GONE);
+							if(coverText != null){
+								coverText.setVisibility(View.VISIBLE);
+							}
+							updateCurrentPageText(position);
+						}
+
+					}, new ImageLoadingProgressListener() {
+						@Override
+						public void onProgressUpdate(String imageUri, View view,
+													 int current, int total) {
+							int picLoadPro = (int) (current * 360.0 / total);
+							progressWheel.setProgress(picLoadPro);
+							progressWheel.setText((int) (picLoadPro * 100.0 / 360.0)+ "%");
+						}
+					});
 
 			container.addView(viewContainer, 0);
 			return viewContainer;
@@ -312,22 +323,7 @@ public class LoadMatchPictureWrap {
 		}
 
 		@Override
-		public void onPageScrollStateChanged(int arg0) {
-		}
-	}
-	
-	private class WhisperBigPhotoLoadWrapDelegateImpl implements WhisperBigPhotoLoadWrap.WhisperBigPhotoLoadWrapDelegate {
-
-		@Override
-		public void loadImgComplete(int viewPagerCurPostion) {
-			
-			TextView coverText = (TextView)viewPager.findViewWithTag("text" + viewPagerCurPostion);
-			if(coverText != null){
-				coverText.setVisibility(View.VISIBLE);
-			}
-			
-			updateCurrentPageText(viewPagerCurPostion);
-		}
+		public void onPageScrollStateChanged(int arg0) {}
 	}
 	
 	private void updateCurrentPageText(int position){

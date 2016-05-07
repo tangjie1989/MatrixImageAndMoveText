@@ -9,8 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@color/whipser_publish_gray" >
-    </ImageView>
+        android:src="@color/whipser_publish_gray" />
 
     <com.tj.matriximageandmovetext.widget.ProgressWheel
         android:id="@+id/whisper_publish_photo_load_progress"
@@ -23,7 +22,7 @@
         ProgressWheel:rimWidth="10dp"
         ProgressWheel:spinSpeed="3dp"
         ProgressWheel:text=""
-        ProgressWheel:textColor1="@color/whipser_publish_black"
+        ProgressWheel:textColor1="@color/whipser_loading_progress_text_color"
         ProgressWheel:textSize1="14sp" />
 
     <TextView
